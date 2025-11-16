@@ -1,0 +1,222 @@
+{
+    "100": {
+        "student_id": "100",
+        "name": "Aarav Sharma",
+        "email": "aarav.sharma100@gmail.com",
+        "phone": "9876500100",
+        "grades": {
+            "maths": 88.0,
+            "science": 91.0,
+            "english": 85.0,
+            "computer": 94.0,
+            "social studies": 82.0
+        },
+        "gpa": 8.8,
+        "attendance": {
+            "maths": 93.0,
+            "science": 95.0,
+            "english": 90.0,
+            "computer": 96.0,
+            "social studies": 92.0
+        },
+        "performance_risk": "Low"
+    },
+    "101": {
+        "student_id": "101",
+        "name": "Riya Mehta",
+        "email": "riya.mehta101@gmail.com",
+        "phone": "9876500101",
+        "grades": {
+            "maths": 92.0,
+            "science": 89.0,
+            "english": 90.0,
+            "computer": 96.0,
+            "social studies": 88.0
+        },
+        "gpa": 9.1,
+        "attendance": {
+            "maths": 97.0,
+            "science": 94.0,
+            "english": 95.0,
+            "computer": 98.0,
+            "social studies": 92.0
+        },
+        "performance_risk": "Low"
+    },
+    "102": {
+        "student_id": "102",
+        "name": "Kabir Verma",
+        "email": "kabir.verma102@gmail.com",
+        "phone": "9876500102",
+        "grades": {
+            "maths": 76.0,
+            "science": 81.0,
+            "english": 79.0,
+            "computer": 88.0,
+            "social science": 74.0
+        },
+        "gpa": 7.96,
+        "attendance": {
+            "maths": 88.0,
+            "science": 85.0,
+            "english": 82.0,
+            "computer": 90.0,
+            "social science": 84.0
+        },
+        "performance_risk": "Low"
+    },
+    "103": {
+        "student_id": "103",
+        "name": "Ananya Singh",
+        "email": "ananya.singh103@gmail.com",
+        "phone": "9876500103",
+        "grades": {
+            "maths": 95.0,
+            "science": 94.0,
+            "english": 92.0,
+            "computer": 98.0,
+            "social science": 90.0
+        },
+        "gpa": 9.38,
+        "attendance": {
+            "maths": 89.0,
+            "science": 98.0,
+            "english": 90.0,
+            "computer": 97.0,
+            "social science": 80.0
+        },
+        "performance_risk": "Low"
+    },
+    "104": {
+        "student_id": "104",
+        "name": "Vihaan Kapoor",
+        "email": "vihan.kapoor104@gmail.com",
+        "phone": "9876500104",
+        "grades": {
+            "maths": 83.0,
+            "science": 100.0,
+            "english": 98.0,
+            "computer": 94.0,
+            "sociel science": 77.0
+        },
+        "gpa": 9.04,
+        "attendance": {
+            "maths": 91.0,
+            "science": 89.0,
+            "english": 86.0,
+            "computer": 93.0,
+            "sociel science": 88.0
+        },
+        "performance_risk": "Low"
+    },
+    "105": {
+        "student_id": "105",
+        "name": "Sneha Patel",
+        "email": "sneha.patel105@gmail.com",
+        "phone": "9876500105",
+        "grades": {
+            "maths": 89.0,
+            "science": 86.0,
+            "english": 93.0,
+            "computer": 91.0,
+            "social science": 81.0
+        },
+        "gpa": 8.8,
+        "attendance": {
+            "maths": 95.0,
+            "science": 93.0,
+            "english": 96.0,
+            "computer": 97.0,
+            "social science": 90.0
+        },
+        "performance_risk": "Low"
+    },
+    "106": {
+        "student_id": "106",
+        "name": "Arjun Khanna",
+        "email": "arjun.khanna106@gmail.com",
+        "phone": "9876500106",
+        "grades": {
+            "maths": 78.0,
+            "science": 98.0,
+            "english": 86.0,
+            "computer": 85.0,
+            "social science": 71.0
+        },
+        "gpa": 8.36,
+        "attendance": {
+            "maths": 84.0,
+            "science": 87.0,
+            "english": 89.0,
+            "computer": 88.0,
+            "social science": 90.0
+        },
+        "performance_risk": "Low"
+    },
+    "107": {
+        "student_id": "107",
+        "name": "Ishika Jain",
+        "email": "ishika.jain107@gmail.com",
+        "phone": "9876500107",
+        "grades": {
+            "maths": 94.0,
+            "science": 90.0,
+            "english": 96.0,
+            "computer": 97.0,
+            "social science": 70.0
+        },
+        "gpa": 8.94,
+        "attendance": {
+            "maths": 98.0,
+            "science": 97.0,
+            "english": 99.0,
+            "computer": 99.0,
+            "social science": 97.0
+        },
+        "performance_risk": "Low"
+    },
+    "108": {
+        "student_id": "108",
+        "name": "Manav Choudhary",
+        "email": "manav.choudhary108@gmail.com",
+        "phone": "9876500108",
+        "grades": {
+            "maths": 97.0,
+            "science": 96.0,
+            "english": 100.0,
+            "computer": 98.0,
+            "social science": 94.0
+        },
+        "gpa": 9.7,
+        "attendance": {
+            "maths": 87.0,
+            "science": 83.0,
+            "english": 78.0,
+            "computer": 98.0,
+            "social science": 100.0
+        },
+        "performance_risk": "Low"
+    },
+    "109": {
+        "student_id": "109",
+        "name": "Prachi Patel",
+        "email": "prachi.patel109@gmail.com",
+        "phone": "9876500109",
+        "grades": {
+            "maths": 90.0,
+            "science": 95.0,
+            "english": 85.0,
+            "computer": 97.0,
+            "social science": 89.0
+        },
+        "gpa": 9.12,
+        "attendance": {
+            "maths": 97.0,
+            "science": 96.0,
+            "english": 89.0,
+            "computer": 98.0,
+            "social science": 78.0
+        },
+        "performance_risk": "Low"
+    }
+}

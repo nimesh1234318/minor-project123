@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .nav {
+            background: var(--secondary);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-exit {
+            background: var(--danger);
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 500px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .students-table th,
+        .students-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .students-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .risk-high { 
+            color: var(--danger); 
+            font-weight: bold; 
+            background: #ffeaea; 
+            padding: 5px 10px; 
+            border-radius: 20px; 
+        }
+        .risk-medium { 
+            color: var(--warning); 
+            font-weight: bold; 
+            background: #fff4e6; 
+            padding: 5px 10px; 
+            border-radius: 20px; 
+        }
+        .risk-low { 
+            color: var(--success); 
+            font-weight: bold; 
+            background: #e8f6ef; 
+            padding: 5px 10px; 
+            border-radius: 20px; 
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary { background: var(--secondary); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background: var(--success);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .ml-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .ml-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .attendance-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .attendance-card.good { border-top: 5px solid var(--success); }
+        .attendance-card.average { border-top: 5px solid var(--warning); }
+        .attendance-card.poor { border-top: 5px solid var(--danger); }
+
+        .footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Student Grade Management System</h1>
+            <p>BCA Final Year Minor Project - Python & Machine Learning</p>
+        </div>
+
+        <!-- Navigation with Attendance & Exit -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="nav-btn" onclick="showTab('students')">
+                <i class="fas fa-user-graduate"></i> Students
+            </button>
+            <button class="nav-btn" onclick="showTab('add-student')">
+                <i class="fas fa-user-plus"></i> Add Student
+            </button>
+            <button class="nav-btn" onclick="showTab('attendance')">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </button>
+            <button class="nav-btn" onclick="showTab('ml-analysis')">
+                <i class="fas fa-brain"></i> ML Analysis
+            </button>
+            <button class="nav-btn" onclick="showTab('reports')">
+                <i class="fas fa-chart-bar"></i> Reports
+            </button>
+            <button class="nav-btn nav-exit" onclick="exitSystem()">
+                <i class="fas fa-sign-out-alt"></i> Exit
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard Tab - FIXED: Now shows all 10 students -->
+            <div id="dashboard" class="tab-content active">
+                <h2>📊 Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>10</h3>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8.45</h3>
+                        <p>Average GPA</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>2</h3>
+                        <p>At-Risk Students</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>92%</h3>
+                        <p>Avg Attendance</p>
+                    </div>
+                </div>
+
+                <h3>All Students</h3>
+                <div class="table-container">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>GPA</th>
+                                <th>Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>100</td>
+                                <td>Aarav Sharma</td>
+                                <td>8.80</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>101</td>
+                                <td>Riya Mehta</td>
+                                <td>9.10</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Kabir Verma</td>
+                                <td>7.96</td>
+                                <td><span class="risk-medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>103</td>
+                                <td>Ananya Singh</td>
+                                <td>9.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>104</td>
+                                <td>Vihaan Kapoor</td>
+                                <td>8.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>105</td>
+                                <td>Sneha Patel</td>
+                                <td>8.88</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>106</td>
+                                <td>Arjun Khanna</td>
+                                <td>7.82</td>
+                                <td><span class="risk-medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>107</td>
+                                <td>Ishika Jain</td>
+                                <td>9.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>108</td>
+                                <td>Manav Choudhary</td>
+                                <td>7.26</td>
+                                <td><span class="risk-high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>109</td>
+                                <td>Prachi Desai</td>
+                                <td>9.20</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="students" class="tab-content">
+                <h2>👨‍🎓 All Students</h2>
+                <div class="table-container">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>GPA</th>
+                                <th>Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>100</td>
+                                <td>Aarav Sharma</td>
+                                <td>aarav.sharma100@example.com</td>
+                                <td>9876500100</td>
+                                <td>8.80</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>101</td>
+                                <td>Riya Mehta</td>
+                                <td>riya.mehta101@example.com</td>
+                                <td>9876500101</td>
+                                <td>9.10</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Kabir Verma</td>
+                                <td>kabir.verma102@example.com</td>
+                                <td>9876500102</td>
+                                <td>7.96</td>
+                                <td><span class="risk-medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>103</td>
+                                <td>Ananya Singh</td>
+                                <td>ananya.singh103@example.com</td>
+                                <td>9876500103</td>
+                                <td>9.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>104</td>
+                                <td>Vihaan Kapoor</td>
+                                <td>vihaan.kapoor104@example.com</td>
+                                <td>9876500104</td>
+                                <td>8.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>105</td>
+                                <td>Sneha Patel</td>
+                                <td>sneha.patel105@example.com</td>
+                                <td>9876500105</td>
+                                <td>8.88</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>106</td>
+                                <td>Arjun Khanna</td>
+                                <td>arjun.khanna106@example.com</td>
+                                <td>9876500106</td>
+                                <td>7.82</td>
+                                <td><span class="risk-medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>107</td>
+                                <td>Ishika Jain</td>
+                                <td>ishika.jain107@example.com</td>
+                                <td>9876500107</td>
+                                <td>9.38</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>108</td>
+                                <td>Manav Choudhary</td>
+                                <td>manav.choudhary108@example.com</td>
+                                <td>9876500108</td>
+                                <td>7.26</td>
+                                <td><span class="risk-high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>109</td>
+                                <td>Prachi Desai</td>
+                                <td>prachi.desai109@example.com</td>
+                                <td>9876500109</td>
+                                <td>9.20</td>
+                                <td><span class="risk-low">Low</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add Student Tab -->
+            <div id="add-student" class="tab-content">
+                <h2>➕ Add New Student</h2>
+                <div class="form-container">
+                    <form onsubmit="addStudent(event)">
+                        <div class="form-group">
+                            <label>Student ID *</label>
+                            <input type="text" id="student-id" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="student-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="student-phone" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Add Student</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Attendance Tab - FIXED: Now shows all 10 students -->
+            <div id="attendance" class="tab-content">
+                <h2>📅 Attendance Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>92%</h3>
+                        <p>Overall Attendance</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8</h3>
+                        <p>Good Attendance</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>2</h3>
+                        <p>Needs Improvement</p>
+                    </div>
+                </div>
+
+                <h3>Subject-wise Attendance</h3>
+                <div class="attendance-grid">
+                    <div class="attendance-card good">
+                        <h4>Maths</h4>
+                        <p>93%</p>
+                    </div>
+                    <div class="attendance-card good">
+                        <h4>Science</h4>
+                        <p>94%</p>
+                    </div>
+                    <div class="attendance-card good">
+                        <h4>English</h4>
+                        <p>92%</p>
+                    </div>
+                    <div class="attendance-card good">
+                        <h4>Computer</h4>
+                        <p>96%</p>
+                    </div>
+                    <div class="attendance-card average">
+                        <h4>Social Studies</h4>
+                        <p>89%</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">Student Attendance Details</h3>
+                <div class="table-container">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Maths</th>
+                                <th>Science</th>
+                                <th>English</th>
+                                <th>Computer</th>
+                                <th>Social Studies</th>
+                                <th>Average</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Aarav Sharma</td>
+                                <td>93%</td>
+                                <td>95%</td>
+                                <td>90%</td>
+                                <td>96%</td>
+                                <td>92%</td>
+                                <td>93%</td>
+                            </tr>
+                            <tr>
+                                <td>Riya Mehta</td>
+                                <td>97%</td>
+                                <td>94%</td>
+                                <td>95%</td>
+                                <td>98%</td>
+                                <td>96%</td>
+                                <td>96%</td>
+                            </tr>
+                            <tr>
+                                <td>Kabir Verma</td>
+                                <td>88%</td>
+                                <td>85%</td>
+                                <td>82%</td>
+                                <td>90%</td>
+                                <td>84%</td>
+                                <td>86%</td>
+                            </tr>
+                            <tr>
+                                <td>Ananya Singh</td>
+                                <td>95%</td>
+                                <td>96%</td>
+                                <td>94%</td>
+                                <td>97%</td>
+                                <td>93%</td>
+                                <td>95%</td>
+                            </tr>
+                            <tr>
+                                <td>Vihaan Kapoor</td>
+                                <td>90%</td>
+                                <td>88%</td>
+                                <td>89%</td>
+                                <td>92%</td>
+                                <td>87%</td>
+                                <td>89%</td>
+                            </tr>
+                            <tr>
+                                <td>Sneha Patel</td>
+                                <td>94%</td>
+                                <td>93%</td>
+                                <td>91%</td>
+                                <td>95%</td>
+                                <td>90%</td>
+                                <td>93%</td>
+                            </tr>
+                            <tr>
+                                <td>Arjun Khanna</td>
+                                <td>85%</td>
+                                <td>82%</td>
+                                <td>80%</td>
+                                <td>88%</td>
+                                <td>78%</td>
+                                <td>83%</td>
+                            </tr>
+                            <tr>
+                                <td>Ishika Jain</td>
+                                <td>98%</td>
+                                <td>97%</td>
+                                <td>96%</td>
+                                <td>99%</td>
+                                <td>95%</td>
+                                <td>97%</td>
+                            </tr>
+                            <tr>
+                                <td>Manav Choudhary</td>
+                                <td>78%</td>
+                                <td>75%</td>
+                                <td>72%</td>
+                                <td>80%</td>
+                                <td>70%</td>
+                                <td>75%</td>
+                            </tr>
+                            <tr>
+                                <td>Prachi Desai</td>
+                                <td>96%</td>
+                                <td>95%</td>
+                                <td>94%</td>
+                                <td>97%</td>
+                                <td>92%</td>
+                                <td>95%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ML Analysis Tab -->
+            <div id="ml-analysis" class="tab-content">
+                <h2>🧠 Machine Learning Analysis</h2>
+                <div class="ml-grid">
+                    <div class="ml-card">
+                        <h3>📈 Performance Analytics</h3>
+                        <p><strong>Total Students:</strong> 10</p>
+                        <p><strong>Average GPA:</strong> 8.45</p>
+                        <p><strong>Top Performer:</strong> Ishika Jain</p>
+                        <p><strong>Best Subject:</strong> Computer (91.6%)</p>
+                    </div>
+                    <div class="ml-card">
+                        <h3>⚠️ Risk Assessment</h3>
+                        <p><strong>At-Risk Students:</strong> 2</p>
+                        <p>• Manav Choudhary (GPA: 7.26)</p>
+                        <p>• Arjun Khanna (GPA: 7.82)</p>
+                        <p><strong>Recommendations:</strong></p>
+                        <p>• Extra classes needed</p>
+                        <p>• Regular monitoring</p>
+                    </div>
+                    <div class="ml-card">
+                        <h3>🔮 Predictions</h3>
+                        <p><strong>High Potential:</strong> 8 students</p>
+                        <p><strong>Needs Support:</strong> 2 students</p>
+                        <p><strong>Predicted Toppers:</strong></p>
+                        <p>• Ishika Jain</p>
+                        <p>• Ananya Singh</p>
+                        <p>• Prachi Desai</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports" class="tab-content">
+                <h2>📈 Academic Reports</h2>
+                <div class="ml-grid">
+                    <div class="ml-card">
+                        <h3>📊 Class Performance</h3>
+                        <p><strong>Overall GPA:</strong> 8.45/10</p>
+                        <p><strong>Pass Rate:</strong> 100%</p>
+                        <p><strong>Attendance Rate:</strong> 92%</p>
+                        <p><strong>Subjects Performance:</strong></p>
+                        <p>• Computer: 91.6%</p>
+                        <p>• Science: 86.5%</p>
+                        <p>• Maths: 85.6%</p>
+                    </div>
+                    <div class="ml-card">
+                        <h3>📋 Export Reports</h3>
+                        <p>Generate complete academic reports</p>
+                        <button class="submit-btn" onclick="generateReport()">
+                            <i class="fas fa-download"></i> Export Complete Report
+                        </button>
+                        <button class="submit-btn" style="background: var(--secondary); margin-top: 10px;">
+                            <i class="fas fa-chart-bar"></i> Generate Analytics
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Student Management System | BCA Final Year Project</p>
+        </div>
+    </div>
+
+    <script>
+        // Simple Tab Navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function addStudent(event) {
+            event.preventDefault();
+            alert('Student added successfully!');
+            // Clear form
+            document.getElementById('student-id').value = '';
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-email').value = '';
+            document.getElementById('student-phone').value = '';
+        }
+
+        function generateReport() {
+            alert('Academic report generated and downloaded!');
+        }
+
+        function exitSystem() {
+            if(confirm('Are you sure you want to exit the system?')) {
+                alert('Thank you for using Student Management System!');
+                // In real app, you might close the window or redirect
+            }
+        }
+
+        // Initialize - Show dashboard by default
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Student Management System Loaded Successfully!");
+        });
+    </script>
+</body>
+</html>
